@@ -1,0 +1,31 @@
+version: '3'
+services:
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  safari-node:
+    image: selenium/node-safari:latest
+    depends_on:
+      - selenium-hub
+    environment:
+      - HUB_HOST=selenium-hub
+    volumes:
+      - /dev/shm:/dev/shm
+
+  python:
+    build:
+      context: ../Tests
+      dockerfile: Dockerfile
+    depends_on:
+      - selenium-hub
+      - safari-node
+    volumes:
+      - ./tests:/Test
+    environment:
+      - SELENIUM_REMOTE_URL=http://selenium-hub:4444/wd/hub
+
+volumes:
+  pgdata:

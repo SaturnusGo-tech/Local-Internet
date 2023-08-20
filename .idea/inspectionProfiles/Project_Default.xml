@@ -1,0 +1,74 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="11">
+            <item index="0" class="java.lang.String" itemvalue="map" />
+            <item index="1" class="java.lang.String" itemvalue="classname" />
+            <item index="2" class="java.lang.String" itemvalue="href" />
+            <item index="3" class="java.lang.String" itemvalue="v-bind:value" />
+            <item index="4" class="java.lang.String" itemvalue="v-else" />
+            <item index="5" class="java.lang.String" itemvalue="key" />
+            <item index="6" class="java.lang.String" itemvalue="v-mask" />
+            <item index="7" class="java.lang.String" itemvalue="v-model" />
+            <item index="8" class="java.lang.String" itemvalue="@focus" />
+            <item index="9" class="java.lang.String" itemvalue="window.location.href" />
+            <item index="10" class="java.lang.String" itemvalue=";" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="17">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="html" />
+            <item index="7" class="java.lang.String" itemvalue="style" />
+            <item index="8" class="java.lang.String" itemvalue="a" />
+            <item index="9" class="java.lang.String" itemvalue="div" />
+            <item index="10" class="java.lang.String" itemvalue="svg" />
+            <item index="11" class="java.lang.String" itemvalue="button" />
+            <item index="12" class="java.lang.String" itemvalue="kevin-h1" />
+            <item index="13" class="java.lang.String" itemvalue="transition-group" />
+            <item index="14" class="java.lang.String" itemvalue="transition" />
+            <item index="15" class="java.lang.String" itemvalue="card-form" />
+            <item index="16" class="java.lang.String" itemvalue="option" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N806" />
+          <option value="N803" />
+          <option value="N812" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="conftest.*" />
+          <option value="str.get_attribute" />
+          <option value="tests.test5_conftest.images_chest" />
+          <option value="tests.select_conftest.x_element" />
+          <option value="tuple.send_keys" />
+          <option value="VOTPUSK.Hotel_main.config.configuration.TestData.CITY" />
+          <option value="VOTPUSK_SDET.VOTPUSK.Articles_main.test_articles.test_articles_page.VOTPUSK" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
