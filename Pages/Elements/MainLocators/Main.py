@@ -273,26 +273,37 @@ class Hotel(BaseMethods, BaseActions, CheckBoxesMethods):
         element.click()
 
     def OpenPage(self, timeout=10):
+        print("Начинаем клик на кнопку Submit...")
         self.click_element(Hotel.Submit, timeout)
+
         try:
+            print("Ожидание появления новой вкладки...")
             WebDriverWait(self.driver, timeout).until(EC.number_of_windows_to_be(2))
+
+            print("Переключение на новую вкладку...")
             self.switch_to_new_tab()
 
             while True:
                 new_page_url = self.driver.current_url
+                print(f"Текущий URL: {new_page_url}")
+
                 response_code = self.get_response_code(new_page_url)
+                print(f"Код ответа: {response_code}")
 
                 try:
+                    print("Проверка наличия элемента с ошибкой...")
                     error_validation_element = WebDriverWait(self.driver, timeout).until(
                         EC.presence_of_element_located(Hotel.Error_Validation)
                     )
                     print("Ошибка редиректа - Нет видимости контента страницы Отели")
-                    break  # Прерываем цикл, так как обнаружена ошибка
+                    break
                 except TimeoutException:
-                    pass  # Продолжаем, если элемент не найден
+                    print("Элемент с ошибкой не найден, продолжаем...")
+                    pass
 
-                self.sleep(1)  # Подождать немного перед следующей попыткой
+                self.sleep(1)
         except (TimeoutException, WebDriverException) as e:
             print(f"Exception: {e}")
+
 
 
