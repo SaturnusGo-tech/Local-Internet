@@ -124,7 +124,7 @@ class TestModule1(BaseTest):
         get_performance_load_from_amenities_checkboxes_5 = ModuleFiltersLocators(driver)
         get_performance_load_from_amenities_checkboxes_5.get_performance_load_from_amenities_checkboxes_5()
 
-    @pytest.mark.smoke()
+    @pytest.mark.Sanity()
     def test_get_performance_value_from_checkboxes_module_7(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         close_modal = ModuleFiltersLocators(driver)

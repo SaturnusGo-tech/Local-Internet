@@ -1,8 +1,9 @@
 from selenium.webdriver.common.by import By
-from Tests_LI.Pages.Base.Methods.Methods import BaseMethods
-from Tests_LI.Pages.Base.Utils.Hotels.HotelData import TestData
-from Tests_LI.Pages.Base.Methods.CheckBoxesMrthods import CheckBoxesMethods
+from Local_Internet.Pages.Base.Utils.Hotels.HotelData import TestData
+from Local_Internet.Pages.Base.Methods.CheckBoxesMrthods import CheckBoxesMethods
 from selenium.common.exceptions import NoSuchElementException
+
+from Local_Internet.Pages.Base.Methods.Methods import BaseMethods
 
 
 # Класс с локаторами элементов страницы

@@ -20,12 +20,7 @@ from selenium import webdriver
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
-        self.handler = logging.StreamHandler()
-        self.handler.setLevel(logging.DEBUG)
-        self.logger.addHandler(self.handler)
-
+        logging.basicConfig(level=logging.ERROR)
 
 class BaseMethods(BasePage):
     # методы для взаимодействия с элементами страницы
@@ -38,10 +33,7 @@ class BaseMethods(BasePage):
                 EC.element_to_be_clickable(by_locator)
             )
             element.click()
-            self.logger.info(f"Clicked on element with locator: {by_locator}")
-        except TimeoutException:
-            self.logger.error(f"{error_message}: Timeout - Failed to click on element with locator: {by_locator}")
-            raise
+
         except ElementNotInteractableException:
             self.logger.error(
                 f"{error_message}: Element not interactable - Failed to click on element with locator: {by_locator}")
@@ -145,12 +137,6 @@ class BaseMethods(BasePage):
         elements = self.driver.find_elements(*by_locator)
         assert len(elements) > 0, f"No elements found with locator {by_locator}."
 
-    @staticmethod
-    def select_random_option(dropdown_element):
-        options = dropdown_element.options
-        if len(options) > 1:
-            random_index = random.randint(1, len(options) - 1)
-            options[random_index].click()
 
     def click_random_enabled_day_in_calendar(self, calendar_locator):
         # кликнуть на локатор виджета календаря
@@ -585,3 +571,6 @@ class BaseMethods(BasePage):
 
         except NoSuchElementException:
             print("No buttons or links found on the page")
+
+
+

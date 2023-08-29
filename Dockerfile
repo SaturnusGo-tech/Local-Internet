@@ -10,13 +10,13 @@ RUN apt-get update && apt-get install -y \
     chromium \
     chromium-driver
 
-WORKDIR /Tests_LI
-ENV PYTHONPATH /Tests_LI
+WORKDIR /Local_Internet
+ENV PYTHONPATH /Local_Internet
 
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /Tests_LI
+COPY . /Local_Internet
 
 
