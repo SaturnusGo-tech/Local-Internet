@@ -6,10 +6,10 @@ import platform
 
 @pytest.fixture(scope="function")
 def driver():
+    chrome_options = Options()
     if platform.system() == "Darwin":
         driver = webdriver.Safari()
     else:
-        chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         driver = webdriver.Chrome(options=chrome_options)

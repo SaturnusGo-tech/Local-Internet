@@ -8,15 +8,15 @@ RUN apt-get update && apt-get install -y \
     unzip \
     curl \
     chromium \
-    chromium-driver
+    chromium-driver \
+    xvfb
 
 WORKDIR /Local_Internet
 ENV PYTHONPATH /Local_Internet
-
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . /Local_Internet
 
-
+CMD ["xvfb-run", "pytest"]

@@ -4,7 +4,7 @@ import pytest
 
 
 class TestModule1(BaseTest):
-    @pytest.mark.smoke()
+    @pytest.mark.smokeHotel
     def test_module_1(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         module_filters = ModuleFiltersLocators(driver)
@@ -20,7 +20,7 @@ class TestModule1(BaseTest):
 
         module_filters.module_1_price_input_sql_injection()
 
-    @pytest.mark.smoke()
+    @pytest.mark.smokeHotel
     def test_module_2(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         checkboxes = ModuleFiltersLocators(driver)
@@ -64,7 +64,7 @@ class TestModule1(BaseTest):
 
         assert checkbox_value == checkbox_active_value, f"Expected checkbox value {checkbox_active_value}, but got {checkbox_value}"
 
-    @pytest.mark.smoke()
+    @pytest.mark.smokeHotel
     def test_module_3(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         hotel_rating = ModuleFiltersLocators(driver)
@@ -74,7 +74,7 @@ class TestModule1(BaseTest):
         hotel_rating.hotel_rating_boxes_3()
         hotel_rating.hotel_rating_boxe_4()
 
-    @pytest.mark.smoke()
+    @pytest.mark.smokeHotel
     def test_get_price_range_module_4(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         close_modal = ModuleFiltersLocators(driver)
@@ -88,7 +88,7 @@ class TestModule1(BaseTest):
         load_page = ModuleFiltersLocators(driver)
         load_page.load_page()
 
-    @pytest.mark.smoke()
+    @pytest.mark.smokeHotel
     def test_get_performance_value_from_checkboxes_module_5(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         close_modal = ModuleFiltersLocators(driver)
@@ -106,7 +106,7 @@ class TestModule1(BaseTest):
         get_performance_value_check_boxes_type_of_apart_5 = ModuleFiltersLocators(driver)
         get_performance_value_check_boxes_type_of_apart_5.get_performance_value_check_boxes_type_of_apart_5()
 
-    @pytest.mark.smoke()
+    @pytest.mark.smokeHotel
     def test_get_performance_value_from_checkboxes_module_6(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         close_modal = ModuleFiltersLocators(driver)
@@ -124,7 +124,7 @@ class TestModule1(BaseTest):
         get_performance_load_from_amenities_checkboxes_5 = ModuleFiltersLocators(driver)
         get_performance_load_from_amenities_checkboxes_5.get_performance_load_from_amenities_checkboxes_5()
 
-    @pytest.mark.Sanity()
+    @pytest.mark.smokeHotel
     def test_get_performance_value_from_checkboxes_module_7(self, driver):
         driver.get('https://www.votpusk.ru/hotels/russia/moscow')
         close_modal = ModuleFiltersLocators(driver)
