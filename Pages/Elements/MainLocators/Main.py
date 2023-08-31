@@ -3,7 +3,8 @@ import requests
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException, \
+    ElementNotInteractableException
 from Local_Internet.Pages.Base.Utils.Hotels.HotelData import TestData
 from Local_Internet.Pages.Base.Methods.CheckBoxesMrthods import CheckBoxesMethods
 from Local_Internet.Pages.Base.URLS.Main.URL import MainURL
@@ -598,7 +599,8 @@ class Train(BaseMethods, BaseActions, CheckBoxesMethods):
 
         assert len(actual_input_value) == len(
             input_value), f"Поле ввода содержит {len(actual_input_value)} символов, ожидается {len(input_value)} символов"
-        assert len(actual_input_value) == 24, f"Ожидаемая длина поля ввода: 24, текущая длина: {len(actual_input_value)}"
+        assert len(
+            actual_input_value) == 24, f"Ожидаемая длина поля ввода: 24, текущая длина: {len(actual_input_value)}"
         assert len(actual_input_value2) == len(
             input_value), f"Поле ввода содержит {len(actual_input_value2)} символов, ожидается {len(input_value)} символов"
         assert len(
@@ -813,7 +815,8 @@ class Routs(BaseMethods, BaseActions, CheckBoxesMethods):
 
         assert len(actual_input_value) == len(
             input_value), f"Поле ввода содержит {len(actual_input_value)} символов, ожидается {len(input_value)} символов"
-        assert len(actual_input_value) == 24, f"Ожидаемая длина поля ввода: 24, текущая длина: {len(actual_input_value)}"
+        assert len(
+            actual_input_value) == 24, f"Ожидаемая длина поля ввода: 24, текущая длина: {len(actual_input_value)}"
         assert len(actual_input_value2) == len(
             input_value), f"Поле ввода содержит {len(actual_input_value2)} символов, ожидается {len(input_value)} символов"
         assert len(
@@ -862,3 +865,158 @@ class Routs(BaseMethods, BaseActions, CheckBoxesMethods):
 
         print("Тест пройден успешно, поле не обрабатывает больше 25 символов")
 
+
+class RedirectVacationItem(BaseMethods, BaseActions, CheckBoxesMethods):
+    Item1 = (By.XPATH, '/html/body/section[4]/div/div/a[1]')
+    Data_count_item1 = (By.XPATH, '/html/body/div[3]/div[2]/p')
+    Item2 = (By.XPATH, '/html/body/section[4]/div/div/a[2]')
+    Data_count_item2 = (By.XPATH, '//*[@id="header"]/div/div[1]/a[2]')
+    Item3 = (By.XPATH, '/html/body/section[4]/div/div/a[3]')
+    Data_count_item3 = (By.XPATH, '//*[@id="header"]/div/div[1]/a[2]')
+    Item4 = (By.XPATH, '/html/body/section[4]/div/div/a[4]')
+    Data_count_item4 = (By.XPATH, '//*[@id="header"]/div/div[1]/a[2]')
+    Item5 = (By.XPATH, '/html/body/section[4]/div/div/a[5]')
+    Data_count_item5 = (By.XPATH, '//*[@id="header"]/div/div[1]/a[2]')
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver = driver
+
+    def PageLoaded(self, timout=10):
+        self.page_loaded(MainURL.Current_url, timout)
+
+    def ScrollView(self):
+        self.window_scroll_by(0, 250)
+
+    def GetItem1(self, timeout=5):
+        self.is_element_present(RedirectVacationItem.Item1, timeout)
+
+    def OpenAndReturnItem(self, item_locator, data_count_locator, item_name, timeout=10):
+        # Действие: Кликнуть на элемент для открытия новой вкладки
+        self.click_element(item_locator, timeout)
+        print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
+
+        # Получить идентификаторы всех открытых вкладок
+        window_handles = self.driver.window_handles
+        assert len(window_handles) >= 2, f"Проверка: Ожидалось, что будет открыта вторая вкладка для {item_name}"
+
+        # Действие: Переключиться на вторую вкладку
+        self.driver.switch_to.window(window_handles[1])
+        print("Проверка: Переключились на вторую вкладку")
+
+        # Подождать, пока страница полностью загрузится
+        wait = WebDriverWait(self.driver, timeout)
+        wait.until(EC.presence_of_element_located(data_count_locator))
+        print(f"Действие: Страница {item_name} полностью загружена")
+
+        # Получить URL текущей страницы
+        current_url = self.driver.current_url
+
+        # Отправить GET-запрос и получить код статуса
+        response = requests.get(current_url)
+        status_code = response.status_code
+        print(f"Код статуса страницы {item_name}: {status_code}")
+
+        # Проверить код статуса и сгенерировать ошибку элемента, если код > 200
+        if status_code > 200:
+            raise Exception(f"Ошибка элемента {item_name}: Код статуса {status_code}")
+
+        # Подождать, пока элемент станет видимым
+        wait = WebDriverWait(self.driver, timeout)
+        data_count_element = wait.until(EC.visibility_of_element_located(data_count_locator))
+        print("Действие: Элемент стал видимым")
+
+        # Вернуться на предыдущую вкладку
+        self.driver.close()
+        self.driver.switch_to.window(window_handles[0])
+        print("Действие: Вернулись на предыдущую вкладку")
+
+
+class RedirectSliders(BaseMethods, BaseActions, CheckBoxesMethods):
+    Item1 = (By.XPATH, '/html/body/section[5]/div/div[1]/div[1]/div/div/div/div[1]/div[1]/div/a/img')
+    data_count_locator = (By.XPATH, '/html/body/div[3]/div[2]/p')
+    Item2 = (By.XPATH, '/html/body/section[5]/div/div[1]/div[1]/div/div/div/div[1]/div[2]/div[1]/a/img')
+    data_count_locator2 = (By.XPATH, '/html/body/div[3]/div[2]/p')
+    Item3 = (By.XPATH, '/html/body/section[5]/div/div[1]/div[1]/div/div/div/div[1]/div[2]/div[2]/a/img')
+    data_count_locator3 = (By.XPATH, '/html/body/div[3]/div[2]/p')
+    MoveItems = (By.XPATH, '/html/body/section[5]/div/div[1]/div[1]/div/button[2]')
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver = driver
+
+    def ScrollView(self):
+        self.window_scroll_by(0, 800)
+
+    def PageLoaded(self, timeout=10):
+        self.page_loaded(MainURL.Current_url)
+
+    def GetItemContent(self, timeout=10):
+        wait = WebDriverWait(self.driver, timeout)
+        items = {'Адыгея': self.Item1, 'Байкал': self.Item2, 'Дагестан': self.Item3}
+        for location, item in items.items():
+            try:
+                # Ожидание появления элемента
+                wait.until(EC.presence_of_element_located(item))
+                print(f"Блок туров {location} был найден")
+            except TimeoutException:
+                print(f"Блок туров {location} не был найден в течение заданного времени")
+
+    def OpenAndReturnItem(self, item_locator, data_count_locator, item_name, timeout=10):
+        try:
+            self.click_element(item_locator, timeout)
+        except ElementNotInteractableException:
+            raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
+
+        print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
+
+        window_handles = self.driver.window_handles
+        assert len(window_handles) >= 2, f"Проверка: Ожидалось, что будет открыта вторая вкладка для {item_name}"
+
+        self.driver.switch_to.window(window_handles[1])
+        print("Проверка: Переключились на вторую вкладку")
+
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            wait.until(EC.text_to_be_present_in_element(data_count_locator, "Найдено"))
+        except TimeoutException:
+            raise Exception(f"Ошибка: Страница {item_name} загружается слишком долго")
+
+        print(f"Действие: Страница {item_name} полностью загружена")
+
+        current_url = self.driver.current_url
+
+        try:
+            response = requests.get(current_url, timeout=10)
+        except requests.exceptions.Timeout:
+            raise Exception(f"Ошибка: Получение кода статуса для {item_name} заняло слишком много времени")
+
+        status_code = response.status_code
+        print(f"Код статуса страницы {item_name}: {status_code}")
+
+        if status_code != 200:
+            raise Exception(f"Ошибка элемента {item_name}: Код статуса {status_code}")
+
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            data_count_element = wait.until(EC.visibility_of_element_located(data_count_locator))
+        except TimeoutException:
+            raise Exception(f"Ошибка: Элемент на странице {item_name} не стал видимым в течение заданного времени")
+
+        print("Действие: Элемент стал видимым")
+
+        data_count_text = data_count_element.text
+        print(f"Текст элемента data_count: {data_count_text}")
+
+        self.driver.close()
+        self.driver.switch_to.window(window_handles[0])
+        print("Действие: Вернулись на предыдущую вкладку")
+
+    def MoveItem(self, timeout=10):
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            wait.until(EC.element_to_be_clickable(RedirectSliders.MoveItems))
+            self.click_element(RedirectSliders.MoveItems, timeout)
+            print("Действие: Успешно кликнули на кнопку для переключения элемента")
+        except TimeoutException:
+            assert False, "Ошибка: Кнопка для переключения элемента не стала кликабельной в течение заданного времени"

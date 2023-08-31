@@ -2,7 +2,8 @@ import time
 
 import pytest
 import requests
-from Local_Internet.Pages.Elements.MainLocators.Main import MainLocators, MainWorldTour, Hotel, Train, Routs
+from Local_Internet.Pages.Elements.MainLocators.Main import MainLocators, MainWorldTour, Hotel, Train, Routs, \
+    RedirectVacationItem, RedirectSliders
 from Local_Internet.Tests.MainTests.TestData.Validation_data.Validation_data_items import Valid_Data
 from Local_Internet.Tests.TestBase import BaseTest
 from Local_Internet.Pages.Base.URLS.Main.URL import MainURL
@@ -342,7 +343,6 @@ class TestTrain(BaseTest):
 
     @pytest.mark.smoke
     def test_validationPos25(self, driver):
-
         driver.get(MainURL.Current_url)
 
         train_validation = Train(driver)
@@ -353,7 +353,6 @@ class TestTrain(BaseTest):
 
     @pytest.mark.xfail
     def test_validationNeg32(self, driver):
-
         driver.get(MainURL.Current_url)
 
         train_validation = Train(driver)
@@ -433,3 +432,42 @@ class TestRouts(BaseTest):
         routs_validation.RoutsSwitch()
 
         routs_validation.Routs_validation_check_up_neg32()
+
+
+class TestRedirectVacationItems(BaseTest):
+    @pytest.mark.smoke
+    def test_RedirectVacationItem(self, driver):
+        driver.get(MainURL.Current_url)
+
+        VacationItem = RedirectVacationItem(driver)
+
+        VacationItem.PageLoaded()
+        VacationItem.ScrollView()
+
+        # Открываем и возвращаемся для каждого элемента
+        VacationItem.OpenAndReturnItem(RedirectVacationItem.Item1, RedirectVacationItem.Data_count_item1, "Туры")
+        VacationItem.OpenAndReturnItem(RedirectVacationItem.Item2, RedirectVacationItem.Data_count_item2, "Отели")
+        VacationItem.OpenAndReturnItem(RedirectVacationItem.Item3, RedirectVacationItem.Data_count_item3, "ЖД")
+        VacationItem.OpenAndReturnItem(RedirectVacationItem.Item4, RedirectVacationItem.Data_count_item4, "Маршруты")
+        """VacationItem.OpenAndReturnItem(RedirectVacationItem.Item5, RedirectVacationItem.Data_count_item5,
+                                       "Достопримечательности")"""
+
+
+class TestRedirectSliders(BaseTest):
+    def testGetItemAttribute(self, driver):
+        driver.get(MainURL.Current_url)
+
+        TourItems = RedirectSliders(driver)
+
+        TourItems.ScrollView()
+        TourItems.PageLoaded()
+        TourItems.GetItemContent()
+        time.sleep(5)
+
+        # Открыть каждый блок и получить информацию о нем
+        TourItems.OpenAndReturnItem(TourItems.Item1, TourItems.data_count_locator, "Адыгея")
+        TourItems.OpenAndReturnItem(TourItems.Item2, TourItems.data_count_locator2, "Байкал")
+        TourItems.OpenAndReturnItem(TourItems.Item3, TourItems.data_count_locator3, "Дагестан")
+
+        TourItems.MoveItem()
+
