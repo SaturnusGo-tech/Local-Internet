@@ -742,7 +742,7 @@ class Routs(BaseMethods, BaseActions, CheckBoxesMethods):
             )
             print("Страница полностью загружена")
 
-            # Ожидание, что URL страницы соответствует ожидаемому
+            # Ожидание, что URL.py страницы соответствует ожидаемому
             WebDriverWait(self.driver, timeout).until(
                 EC.url_to_be(MainURL.Routs_url)
             )
@@ -909,7 +909,7 @@ class RedirectVacationItem(BaseMethods, BaseActions, CheckBoxesMethods):
         wait.until(EC.presence_of_element_located(data_count_locator))
         print(f"Действие: Страница {item_name} полностью загружена")
 
-        # Получить URL текущей страницы
+        # Получить URL.py текущей страницы
         current_url = self.driver.current_url
 
         # Отправить GET-запрос и получить код статуса
@@ -1115,4 +1115,3 @@ class ArticlesSliders_form(BaseMethods, BaseActions, CheckBoxesMethods):
         self.driver.close()
         self.driver.switch_to.window(window_handles[0])
         print("Действие: Вернулись на предыдущую вкладку")
-

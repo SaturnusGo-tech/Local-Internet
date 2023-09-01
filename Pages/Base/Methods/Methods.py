@@ -434,7 +434,7 @@ class BaseMethods(BasePage):
         element = self.driver.find_element(*by_locator) if by_locator else None
         error_info = {
             'Локатор': str(by_locator),
-            'URL': self.driver.current_url,
+            'URL.py': self.driver.current_url,
             'HTML-код': element.get_attribute('outerHTML') if element else None,
             'Текст': element.text if element else None,
             'Расположение': element.location if element else None,
