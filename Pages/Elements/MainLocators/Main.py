@@ -1020,3 +1020,99 @@ class RedirectSliders(BaseMethods, BaseActions, CheckBoxesMethods):
             print("Действие: Успешно кликнули на кнопку для переключения элемента")
         except TimeoutException:
             assert False, "Ошибка: Кнопка для переключения элемента не стала кликабельной в течение заданного времени"
+
+
+class ArticlesSliders_form(BaseMethods, BaseActions, CheckBoxesMethods):
+    ArticlesDescription1 = (By.XPATH, '//*[@id="swiper-wrapper-0710b67dc270042f3"]/div[1]/a/div')
+    GetItemAttribute = (By.XPATH, '//*[@id="page-header"]/main/section[1]/div/div/div/div[2]/div[1]/h1')
+    ArticlesDescription2 = (By.XPATH, '//*[@id="swiper-wrapper-0710b67dc270042f3"]/div[2]/a/div')
+    ArticlesDescription3 = (By.XPATH, '//*[@id="swiper-wrapper-0710b67dc270042f3"]/div[3]/a/div')
+    MoveItem = (By.XPATH, '/html/body/section[6]/div/div/div/div[1]/div[3]')
+
+    OpenCountryItemList = (By.XPATH, '//*[@id="select2-country-container"]')
+    GetItemCountryList = (By.XPATH, '/html/body/span/span')
+    OpenCityItemCityList = (By.XPATH, '//*[@id="select2-city-container"]')
+    GetItemCityList = (By.XPATH, '/html/body/span/span')
+    OpenThematicItemList = (By.XPATH, '//*[@id="select2-theme-container"]')
+    GetItemThematicList = (By.XPATH, '/html/body/span/span')
+
+    Submit = (By.XPATH, '/html/body/section[6]/div/div/div/div[2]/form/button')
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver = driver
+
+    def ScrollView(self):
+        self.window_scroll_by(0, 1400)
+
+    def PageLoaded(self, timeout=10):
+        self.page_loaded(MainURL.Current_url)
+
+    """def GetItemContent(self, timeout=20):
+        wait = WebDriverWait(self.driver, timeout)
+        items = {'12 лучших': self.ArticlesDescription1, '15 лучших': self.ArticlesDescription2,
+                 'Антальи': self.ArticlesDescription3}
+        for location, item in items.items():
+            try:
+                # Ожидание появления элемента
+                element = wait.until(EC.presence_of_element_located(item))
+                print(f"Описание {location} было найдено")
+
+                # Получение атрибутов элемента
+                element_attributes = element.get_attribute('outerHTML')
+                print(f"Атрибуты описания {location}: {element_attributes}")
+            except TimeoutException:
+                print(f"Описание {location} не было найдено в течение заданного времени")"""
+
+    def OpenAndReturnItem(self, item_locator, item_name, timeout=10):
+        try:
+            self.click_element(item_locator, timeout)
+        except ElementNotInteractableException:
+            raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
+
+        print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
+
+        window_handles = self.driver.window_handles
+        assert len(window_handles) >= 2, f"Проверка: Ожидалось, что будет открыта вторая вкладка для {item_name}"
+
+        self.driver.switch_to.window(window_handles[1])
+        print("Проверка: Переключились на вторую вкладку")
+
+        data_count_locator = (By.XPATH, '//*[@id="page-header"]/main/section[1]/div/div/div/div[2]/div[1]/h1')
+
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            wait.until(EC.text_to_be_present_in_element(data_count_locator, "Найдено"))
+        except TimeoutException:
+            raise Exception(f"Ошибка: Страница {item_name} загружается слишком долго")
+
+        print(f"Действие: Страница {item_name} полностью загружена")
+
+        current_url = self.driver.current_url
+
+        try:
+            response = requests.get(current_url, timeout=10)
+        except requests.exceptions.Timeout:
+            raise Exception(f"Ошибка: Получение кода статуса для {item_name} заняло слишком много времени")
+
+        status_code = response.status_code
+        print(f"Код статуса страницы {item_name}: {status_code}")
+
+        if status_code != 200:
+            raise Exception(f"Ошибка элемента {item_name}: Код статуса {status_code}")
+
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            data_count_element = wait.until(EC.visibility_of_element_located(data_count_locator))
+        except TimeoutException:
+            raise Exception(f"Ошибка: Элемент на странице {item_name} не стал видимым в течение заданного времени")
+
+        print("Действие: Элемент стал видимым")
+
+        data_count_text = data_count_element.text
+        print(f"Текст элемента data_count: {data_count_text}")
+
+        self.driver.close()
+        self.driver.switch_to.window(window_handles[0])
+        print("Действие: Вернулись на предыдущую вкладку")
+

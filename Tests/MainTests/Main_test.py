@@ -3,7 +3,7 @@ import time
 import pytest
 import requests
 from Local_Internet.Pages.Elements.MainLocators.Main import MainLocators, MainWorldTour, Hotel, Train, Routs, \
-    RedirectVacationItem, RedirectSliders
+    RedirectVacationItem, RedirectSliders, ArticlesSliders_form
 from Local_Internet.Tests.MainTests.TestData.Validation_data.Validation_data_items import Valid_Data
 from Local_Internet.Tests.TestBase import BaseTest
 from Local_Internet.Pages.Base.URLS.Main.URL import MainURL
@@ -454,6 +454,7 @@ class TestRedirectVacationItems(BaseTest):
 
 
 class TestRedirectSliders(BaseTest):
+    @pytest.mark.smoke
     def testGetItemAttribute(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -470,4 +471,17 @@ class TestRedirectSliders(BaseTest):
         TourItems.OpenAndReturnItem(TourItems.Item3, TourItems.data_count_locator3, "Дагестан")
 
         TourItems.MoveItem()
+
+
+class TestArticlesSliders(BaseTest):
+    @pytest.mark.smoke
+    def test_ArticlesItems(self, driver):
+        driver.get(MainURL.Current_url)
+
+        articles_item = ArticlesSliders_form(driver)
+
+        articles_item.PageLoaded()
+        articles_item.ScrollView()
+        articles_item.GetItemContent()
+
 
