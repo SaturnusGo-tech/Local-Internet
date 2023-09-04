@@ -1,7 +1,8 @@
 import time
 
 import pytest
-from Local_Internet.Pages.Elements.AttractionsLocators.Attractions import AttractionsList, ThematicRedirect, GettingStatusLinksBlocks
+from Local_Internet.Pages.Elements.AttractionsLocators.Attractions import AttractionsList, ThematicRedirect, \
+    GettingStatusLinksBlocks, NewAttractionsItems, AllTopicRedirectItem, AdditionalArticles, InnerPageAttractions
 from Local_Internet.Tests.AttractionsTests.TestBase import BaseTest
 from Local_Internet.Pages.Base.URLS.Attractions.URL import AttractionsURL
 
@@ -45,7 +46,7 @@ class TestAttractionsList(BaseTest):
 
         time.sleep(5)
 
-        #ThematicItems.MoveItem()
+        # ThematicItems.MoveItem()
 
     def test_Getting_response_data_attractions(self, driver):
         driver.get(AttractionsURL.Current_url)
@@ -71,5 +72,79 @@ class TestAttractionsList(BaseTest):
         AttractionsLinksResponse.AttractionsItemsLinksRedirect(GettingStatusLinksBlocks.ArtItems9, 'ArtItems9')
 
         time.sleep(5)
+
+    def test_NewAttractionItemsRedirect(self, driver):
+        driver.get(AttractionsURL.Current_url)
+        AttractionsItemNew = NewAttractionsItems(driver)
+
+        AttractionsItemNew.scroll_view()
+        time.sleep(5)
+
+        AttractionsItemNew.attractions_thematic_links_redirect(NewAttractionsItems.NewAttractionsItem1, 'NewAtt'
+                                                                                                     'ractionsItem1')
+
+    def test_AllTopicItem(self, driver):
+        driver.get(AttractionsURL.Current_url)
+
+        AllTopicItems = AllTopicRedirectItem(driver)
+
+        AllTopicItems.ScrollView()
+
+        time.sleep(5)
+
+        AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.CanyonItem, 'CanyonItem')
+        AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.AquaTopic, 'AquaTopic')
+        AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.Lakes, 'Lakes')
+        AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.Gallery, 'Gallery')
+        AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.Theatre, 'Theatre')
+
+    def test_AdditionalArticles(self, driver):
+        driver.get(AttractionsURL.Current_url)
+
+        AdditionalArticlesItemsRedirect = AdditionalArticles(driver)
+
+        AdditionalArticlesItemsRedirect.ScrollView()
+        time.sleep(5)
+
+        AdditionalArticlesItemsRedirect.AdditionalArticlesRedirect(AdditionalArticles.LinkItem1, 'LinkItem1')
+        AdditionalArticlesItemsRedirect.AdditionalArticlesRedirect(AdditionalArticles.LinkItem2, 'LinkItem2')
+        AdditionalArticlesItemsRedirect.AdditionalArticlesRedirect(AdditionalArticles.LinkItem3, 'LinkItem3')
+
+        AdditionalArticlesItemsRedirect.OfferBlock(AdditionalArticles.Routs, 'Маршруты')
+        AdditionalArticlesItemsRedirect.OfferBlock(AdditionalArticles.Tours, 'Туры')
+        AdditionalArticlesItemsRedirect.OfferBlock(AdditionalArticles.Attractions, 'Достопримечательности')
+        AdditionalArticlesItemsRedirect.OfferBlock(AdditionalArticles.Hotel, 'Отели')
+
+    def test_InnerPageAttractionsItems(self, driver):
+        driver.get(AttractionsURL.Current_url)
+
+        attraction_list = InnerPageAttractions(driver)
+        attractionsTopics = InnerPageAttractions(driver)
+
+        attraction_list.Scroll_View()
+        attraction_list.PageLoaded(
+            expected_url=AttractionsURL.Current_url)
+        time.sleep(5)
+        attraction_list.OpenCountryItems()
+        attraction_list.GetCountryListItems()
+        attraction_list.SelectCountryItem()
+        time.sleep(5)
+        attraction_list.OpenCityItems()
+        attraction_list.GetCityListItems()
+        attraction_list.SelectCityItem()
+        attraction_list.OpenAndReturnItems(AttractionsList.Submit, 'Submit')
+        time.sleep(5)
+
+        attractionsTopics.Scroll_View()
+        time.sleep(5)
+        attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.NatureItem, 'Природа')
+        time.sleep(5)
+        attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.ReligionItem, 'Религозные')
+        attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.FloraItem, 'Флора и Фауна')
+        attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.HistoricalItem, 'Исторические')
+        attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.ArchitectureItem, 'Архитектура')
+        attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.EntertainmentItem, 'Развлечения')
+
+
 
 
