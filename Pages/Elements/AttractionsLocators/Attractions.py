@@ -3,7 +3,8 @@ import time
 
 import pytest
 import requests
-from selenium.common import TimeoutException, ElementNotInteractableException
+from selenium.common import TimeoutException, ElementNotInteractableException, ElementClickInterceptedException, \
+    NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,6 +12,9 @@ from Local_Internet.Pages.Base.Methods.Methods import BaseMethods
 from Local_Internet.Pages.Base.Methods.Base import BaseActions
 from Local_Internet.Pages.Base.Methods.CheckBoxesMrthods import CheckBoxesMethods
 from Local_Internet.Pages.Base.URLS.Attractions.URL import AttractionsURL
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 class AttractionsList(BaseActions, BaseMethods, CheckBoxesMethods):
@@ -102,7 +106,6 @@ class AttractionsList(BaseActions, BaseMethods, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -185,7 +188,6 @@ class ThematicRedirect(BaseActions, BaseMethods, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -271,7 +273,6 @@ class GettingStatusLinksBlocks(BaseActions, BaseMethods, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -401,7 +402,6 @@ class AllTopicRedirectItem(BaseMethods, BaseActions, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -472,7 +472,6 @@ class AdditionalArticles(BaseMethods, BaseActions, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -520,7 +519,6 @@ class AdditionalArticles(BaseMethods, BaseActions, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -641,7 +639,6 @@ class InnerPageAttractions(BaseMethods, BaseActions, CheckBoxesMethods):
             raise Exception(f"Ошибка: Элемент {item_name} не кликабельный")
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока не будет открыто две вкладки
         try:
             wait = WebDriverWait(self.driver, timeout)
             wait.until(EC.number_of_windows_to_be(2))
@@ -711,7 +708,6 @@ class InnerPageAttractions(BaseMethods, BaseActions, CheckBoxesMethods):
 
         print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
 
-        # Дождитесь, пока появится новое окно
         try:
             wait.until(lambda d: len(d.window_handles) > len(current_window_handles))
         except TimeoutException:
@@ -770,3 +766,195 @@ class AttractionsItemsRedirect(BaseMethods, BaseActions, CheckBoxesMethods):
     AttractionsItem11 = (By.XPATH, '/html/body/section[1]/div/div/div/div[11]/div[1]/a/img')
     AttractionsItem12 = (By.XPATH, '/html/body/section[1]/div/div/div/div[12]/div[1]/a[1]/img')
     AttractionsItem13 = (By.XPATH, '/html/body/section[1]/div/div/div/div[13]/div[1]/a[1]/img')
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver = driver
+        self.logger = logging.getLogger(__name__)
+
+    def Scroll_View(self):
+        try:
+            self.window_scroll_by(0, 750)
+            print("Действие: Элемент блоков достопримечательностей в зоне видимости")
+        except Exception:
+            print("Ошибка: Скролл страницы заблокирован")
+
+    def Scroll_View6(self):
+        try:
+            self.window_scroll_by(0, 950)
+            self.sleep(3)
+            print("Действие: Элемент блоков достопримечательностей в зоне видимости")
+        except Exception:
+            print("Ошибка: Скролл страницы заблокирован")
+
+    def Scroll_View9(self):
+        try:
+            self.window_scroll_by(0, 1250)
+            print("Действие: Элемент блоков достопримечательностей в зоне видимости")
+        except Exception:
+            print("Ошибка: Скролл страницы заблокирован")
+
+    def Scroll_View13(self):
+        try:
+            self.window_scroll_by(0, 1650)
+            print("Действие: Элемент блоков достопримечательностей в зоне видимости")
+        except Exception:
+            print("Ошибка: Скролл страницы заблокирован")
+
+    def OpenAndReturnItem(self, item_locator, item_name, timeout=10):
+        # Клик по элементу
+        try:
+            self.click_element(item_locator, timeout)
+        except (ElementNotInteractableException, ElementClickInterceptedException) as e:
+            raise Exception(f"Ошибка: Элемент {item_name} не кликабельный ({str(e)})")
+        print(f"Действие: Кликнули на элемент {item_name} для открытия новой вкладки")
+
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            wait.until(EC.number_of_windows_to_be(2))
+        except TimeoutException:
+            raise Exception(f"Ошибка: Не удалось открыть новую вкладку в течение {timeout} секунд")
+
+        # Переключение на новую вкладку
+        window_handles = self.driver.window_handles
+        new_window_handle = [handle for handle in window_handles if handle != self.driver.current_window_handle][0]
+        self.driver.switch_to.window(new_window_handle)
+        print("Проверка: Переключились на новую вкладку")
+
+        # Получение URL текущей страницы
+        current_url = self.driver.current_url
+
+        # Отправка GET-запроса на URL текущей страницы и проверка кода ответа
+        try:
+            response = requests.get(current_url, timeout=10)
+        except requests.exceptions.Timeout:
+            raise Exception(f"Ошибка: Получение кода статуса для {item_name} заняло слишком много времени")
+
+        status_code = response.status_code
+        print(f"Код статуса страницы {item_name}: {status_code}")
+
+        if status_code != 200:
+            raise Exception(f"Ошибка элемента {item_name}: Код статуса {status_code}")
+
+        # Подтягивание аттрибута с другой страницы
+        GetAttributeItem = (By.XPATH, '/html/body/main/section[1]/div/div/div/div[1]/h1')
+        try:
+            wait = WebDriverWait(self.driver, timeout)
+            GetAttributeItem = wait.until(EC.visibility_of_element_located(GetAttributeItem))
+        except TimeoutException:
+            raise Exception(f"Ошибка: Элемент на странице {item_name} не стал видимым в течение заданного времени")
+
+        GetAttributeItem_text = GetAttributeItem.text
+        print(f"Текст элемента data_count: {GetAttributeItem_text}")
+
+        # Закрытие текущей вкладки и переключение на предыдущую
+        self.driver.close()
+        self.driver.switch_to.window(window_handles[0])
+        print("Действие: Вернулись на предыдущую вкладку")
+
+
+class Map(BaseMethods, BaseActions, CheckBoxesMethods):
+    Map = (By.XPATH, '//*[@id="map"]')
+    ActiveElement = (By.XPATH, '//*[@id="map"]/div[1]/div[4]/img[13]')
+    ZoomIn = (By.XPATH, '//*[@id="map"]/div[2]/div[1]/div/a[1]')
+    ZoomOut = (By.XPATH, '//*[@id="map"]/div[2]/div[1]/div/a[2]')
+    Marker = (By.XPATH, '//*[@id="map"]/div[1]/div[4]/img[11]')
+    MarkerContent = (By.XPATH, '//*[@id="map"]/div[1]/div[6]/div/div[1]')
+    GetAttributeItem = (By.XPATH, '/html/body/main/section[1]/div/div/div/div[1]/h1')
+
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver = driver
+        self.logger = logging.getLogger(__name__)
+
+    def Scroll_View(self):
+        try:
+            self.window_scroll_by(0, 2850)
+            self.logger.info("Действие: Элемент блоков достопримечательностей в зоне видимости")
+        except Exception:
+            self.logger.error("Ошибка: Скролл страницы заблокирован")
+
+    def map_functionality(self):
+        print("Начало теста функциональности карты")
+
+        # 1. Проверка наличия карты на странице
+        print("Шаг 1: Проверка наличия карты на странице")
+        try:
+            WebDriverWait(self.driver, 30).until(
+                EC.presence_of_element_located(self.Map)
+            )
+            print("Шаг 1: Успешно - Карта присутствует на странице")
+        except TimeoutException:
+            print("Шаг 1: Ошибка - Карта отсутствует на странице")
+            self.driver.quit()
+            return
+
+        # Даем время карте для полной загрузки
+        time.sleep(5)
+
+        # 2. Проверка активности карты
+        print("Шаг 2: Проверка активности карты")
+        try:
+            active_element = self.driver.find_element(*self.ActiveElement)
+            assert active_element.is_enabled(), "Элемент на карте неактивен"
+            print("Шаг 2: Успешно - Карта активна")
+        except (NoSuchElementException, AssertionError):
+            print("Шаг 2: Ошибка - Карта неактивна")
+            self.driver.quit()
+            return
+
+        # 3. Проверка функций зума
+        print("Шаг 3: Проверка функций зума")
+        try:
+            zoom_in_button = self.driver.find_element(*self.ZoomIn)
+            zoom_out_button = self.driver.find_element(*self.ZoomOut)
+
+            zoom_in_button.click()
+            time.sleep(5)
+            print("Шаг 3.1: Зуммирование вперёд успешно")
+
+            zoom_out_button.click()
+            time.sleep(5)
+            print("Шаг 3.2: Зуммирование назад успешно")
+        except (NoSuchElementException, Exception) as e:
+            print(f"Шаг 3: Ошибка - Проблемы с функцией зума ({str(e)})")
+            self.driver.quit()
+            return
+
+        # 4. Клик на маркер
+        print("Шаг 4: Клик на маркер")
+        try:
+            marker = self.driver.find_element(*self.Marker)
+            marker.click()
+            time.sleep(3)
+            print("Шаг 4: Успешно - Клик на маркер выполнен")
+        except (NoSuchElementException, Exception) as e:
+            print(f"Шаг 4: Ошибка - Не удалось кликнуть на маркер ({str(e)})")
+            self.driver.quit()
+            return
+
+        # 5. Клик на контент маркера и переход на новую страницу
+        print("Шаг 5: Клик на контент маркера и переход на новую страницу")
+        try:
+            marker_content = self.driver.find_element(*self.MarkerContent)
+            marker_content.click()
+            time.sleep(3)
+            print("Шаг 5: Успешно - Переход на новую страницу выполнен")
+        except (NoSuchElementException, Exception) as e:
+            print(f"Шаг 5: Ошибка - Не удалось перейти на новую страницу ({str(e)})")
+            self.driver.quit()
+            return
+
+        # 6. Получение и вывод атрибута GetAttributeItem
+        print("Шаг 6: Получение и вывод атрибута GetAttributeItem")
+        try:
+            attribute_item = self.driver.find_element(*self.GetAttributeItem).text
+            print(f"Атрибут GetAttributeItem: {attribute_item}")
+            print(f"Шаг 6: Успешно - Атрибут GetAttributeItem получен: {attribute_item}")
+        except (NoSuchElementException, Exception) as e:
+            print(f"Шаг 6: Ошибка - Не удалось получить атрибут GetAttributeItem ({str(e)})")
+            self.driver.quit()
+            return
+
+        print("Тест успешно выполнен")
+        self.driver.quit()

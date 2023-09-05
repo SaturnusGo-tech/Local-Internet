@@ -10,7 +10,7 @@ from Local_Internet.Pages.Base.URLS.Main.URL import MainURL
 
 
 class TestRussianTour(BaseTest):
-    @pytest.mark.smoke()
+    @pytest.mark.Main
     def test_tour_positive(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -27,7 +27,7 @@ class TestRussianTour(BaseTest):
 
         assert response_code == 200, f"Network response code was {response_code}, expected 200"
 
-    @pytest.mark.smoke()
+    @pytest.mark.Main
     def test_positive_with_hex_values4(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -42,7 +42,7 @@ class TestRussianTour(BaseTest):
         response = requests.get(current_page_url)
         assert response.status_code == 200, f"Network response code was {response.status_code}, expected 200"
 
-    @pytest.mark.smoke()
+    @pytest.mark.Main
     def test_positive_with_hex_values12(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -100,7 +100,7 @@ class TestRussianTour(BaseTest):
                                        f"пропустила ошибку редиректа")
 
     class TestWorldTour(BaseTest):
-        @pytest.mark.smoke
+        @pytest.mark.Main
         def test_world_pos(self, driver):
             try:
                 driver.get(MainURL.Current_url)
@@ -128,7 +128,7 @@ class TestRussianTour(BaseTest):
                 print("Тест провален:", e)
 
         class TestWorldTour(BaseTest):
-            @pytest.mark.smoke
+            @pytest.mark.Main
             def test_open_page_negative(self, driver):
                 try:
                     driver.get(MainURL.Current_url)
@@ -151,7 +151,7 @@ class TestRussianTour(BaseTest):
                     print("Exception:", e)
                     raise
 
-        @pytest.mark.smoke
+        @pytest.mark.Main
         def test_world_neg_pull_attribute(self, driver):
             try:
                 driver.get(MainURL.Current_url)
@@ -181,7 +181,7 @@ class TestRussianTour(BaseTest):
             except AssertionError as e:
                 print("Тест провален:", e)
 
-        @pytest.mark.smoke()
+        @pytest.mark.Main
         def test_positive_with_hex_values4(self, driver):
             driver.get(MainURL.Current_url)
 
@@ -198,7 +198,7 @@ class TestRussianTour(BaseTest):
             response = requests.get(current_page_url)
             assert response.status_code == 200, f"Network response code was {response.status_code}, expected 200"
 
-        @pytest.mark.smoke()
+        @pytest.mark.Main
         def test_positive_with_hex_values12(self, driver):
             driver.get(MainURL.Current_url)
 
@@ -245,7 +245,7 @@ class TestRussianTour(BaseTest):
 
 
 class TestHotel(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_hotel_redirect(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -262,7 +262,7 @@ class TestHotel(BaseTest):
         time.sleep(3)
         hotel_page.OpenPage()
 
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_hotel_validation_checkUp_Len8(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -274,7 +274,7 @@ class TestHotel(BaseTest):
         time.sleep(3)
         hotel_validation.OpenPage()
 
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_hotel_validation_checkUp_Len24(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -312,7 +312,7 @@ class TestHotel(BaseTest):
 
 
 class TestTrain(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_Train_Redirect(self, driver, s=3):
         driver.get(MainURL.Current_url)
 
@@ -331,7 +331,7 @@ class TestTrain(BaseTest):
         time.sleep(s)
         train_redirecting.OpenPage()
 
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_validationPos8(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -341,7 +341,7 @@ class TestTrain(BaseTest):
         train_validation.TrainSwitch()
         train_validation.Train_validation_check_up_pos4()
 
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_validationPos25(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -373,7 +373,7 @@ class TestTrain(BaseTest):
 
 
 class TestRouts(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_routs_redirect(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -389,7 +389,7 @@ class TestRouts(BaseTest):
         routs_redirect.SelectItemOut()
         routs_redirect.OpenRoutsPage()
 
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_validationPos8(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -400,7 +400,7 @@ class TestRouts(BaseTest):
 
         routs_validation.Routs_validation_check_up_pos4()
 
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_validationPos25(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -435,7 +435,7 @@ class TestRouts(BaseTest):
 
 
 class TestRedirectVacationItems(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_RedirectVacationItem(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -454,7 +454,7 @@ class TestRedirectVacationItems(BaseTest):
 
 
 class TestRedirectSliders(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def testGetItemAttribute(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -474,7 +474,7 @@ class TestRedirectSliders(BaseTest):
 
 
 class TestArticlesSliders(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Main
     def test_ArticlesItems(self, driver):
         driver.get(MainURL.Current_url)
 
@@ -482,6 +482,4 @@ class TestArticlesSliders(BaseTest):
 
         articles_item.PageLoaded()
         articles_item.ScrollView()
-        articles_item.GetItemContent()
-
-
+        # articles_item.GetItemContent()

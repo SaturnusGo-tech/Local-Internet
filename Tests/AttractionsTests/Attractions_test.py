@@ -1,14 +1,17 @@
 import time
 
 import pytest
-from Local_Internet.Pages.Elements.AttractionsLocators.Attractions import AttractionsList, ThematicRedirect, \
-    GettingStatusLinksBlocks, NewAttractionsItems, AllTopicRedirectItem, AdditionalArticles, InnerPageAttractions
+from Local_Internet.Pages.Elements.AttractionsLocators.Attractions import (AttractionsList, ThematicRedirect, \
+                                                                           GettingStatusLinksBlocks,
+                                                                           NewAttractionsItems, AllTopicRedirectItem,
+                                                                           AdditionalArticles, InnerPageAttractions,
+                                                                           AttractionsItemsRedirect, Map)
 from Local_Internet.Tests.AttractionsTests.TestBase import BaseTest
 from Local_Internet.Pages.Base.URLS.Attractions.URL import AttractionsURL
 
 
 class TestAttractionsList(BaseTest):
-    @pytest.mark.smoke
+    @pytest.mark.Attractions
     def test_AttractionsList(self, driver):
         driver.get(AttractionsURL.Current_url)
 
@@ -28,7 +31,7 @@ class TestAttractionsList(BaseTest):
         attraction_list.OpenAndReturnItem(AttractionsList.Submit, 'Submit')
         time.sleep(5)
 
-    @pytest.mark.smoke
+    @pytest.mark.Attractions
     def test_ThematicItemsRedirect(self, driver):
         driver.get(AttractionsURL.Current_url)
 
@@ -48,6 +51,7 @@ class TestAttractionsList(BaseTest):
 
         # ThematicItems.MoveItem()
 
+    @pytest.mark.Attractions
     def test_Getting_response_data_attractions(self, driver):
         driver.get(AttractionsURL.Current_url)
 
@@ -73,6 +77,7 @@ class TestAttractionsList(BaseTest):
 
         time.sleep(5)
 
+    @pytest.mark.Attractions
     def test_NewAttractionItemsRedirect(self, driver):
         driver.get(AttractionsURL.Current_url)
         AttractionsItemNew = NewAttractionsItems(driver)
@@ -81,8 +86,9 @@ class TestAttractionsList(BaseTest):
         time.sleep(5)
 
         AttractionsItemNew.attractions_thematic_links_redirect(NewAttractionsItems.NewAttractionsItem1, 'NewAtt'
-                                                                                                     'ractionsItem1')
+                                                                                                        'ractionsItem1')
 
+    @pytest.mark.Attractions
     def test_AllTopicItem(self, driver):
         driver.get(AttractionsURL.Current_url)
 
@@ -98,6 +104,7 @@ class TestAttractionsList(BaseTest):
         AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.Gallery, 'Gallery')
         AllTopicItems.TopicItemsLinksRedirect(AllTopicRedirectItem.Theatre, 'Theatre')
 
+    @pytest.mark.Attractions
     def test_AdditionalArticles(self, driver):
         driver.get(AttractionsURL.Current_url)
 
@@ -115,6 +122,7 @@ class TestAttractionsList(BaseTest):
         AdditionalArticlesItemsRedirect.OfferBlock(AdditionalArticles.Attractions, 'Достопримечательности')
         AdditionalArticlesItemsRedirect.OfferBlock(AdditionalArticles.Hotel, 'Отели')
 
+    @pytest.mark.Attractions
     def test_InnerPageAttractionsItems(self, driver):
         driver.get(AttractionsURL.Current_url)
 
@@ -145,6 +153,41 @@ class TestAttractionsList(BaseTest):
         attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.ArchitectureItem, 'Архитектура')
         attractionsTopics.AttractionsTopicsRedirect(InnerPageAttractions.EntertainmentItem, 'Развлечения')
 
+    @pytest.mark.Attractions
+    def test_AttractionsBlockRedirecting(self, driver):
+        driver.get(AttractionsURL.InnerPage)
 
+        AttractionsInnerPage = AttractionsItemsRedirect(driver)
 
+        AttractionsInnerPage.Scroll_View()
+        time.sleep(5)
+
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem1, 'AttractionsItem1')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem2, 'AttractionsItem2')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem3, 'AttractionsItem3')
+
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem4, 'AttractionsItem4')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem5, 'AttractionsItem5')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem6, 'AttractionsItem6')
+        time.sleep(2)
+
+        """AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem7, 'AttractionsItem7')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem8, 'AttractionsItem8')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem9, 'AttractionsItem9')
+
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem10, 'AttractionsItem10')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem11, 'AttractionsItem11')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem12, 'AttractionsItem12')
+        AttractionsInnerPage.OpenAndReturnItem(AttractionsItemsRedirect.AttractionsItem13, 'AttractionsItem13')"""
+
+    @pytest.mark.Attractions
+    def test_map_functionality(self, driver):
+        driver.get(AttractionsURL.InnerPage)
+
+        MapFunctionality = Map(driver)
+
+        MapFunctionality.Scroll_View()
+
+        MapFunctionality.map_functionality()
+        time.sleep(5)
 
